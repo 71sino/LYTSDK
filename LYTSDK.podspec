@@ -51,7 +51,7 @@ Pod::Spec.new do |s|
     sdk.libraries = "z", "xml2", "sqlite3.0"
     sdk.dependency 'LYTSDK/LYTFoundation'
     sdk.dependency 'LYTSDK/LYTCommonLib'
-    sdk.source_files  = "Classes/LYTSDK/*.h", "FrameworkTest/LYTSDK/*.a"
+    sdk.source_files  = "Classes/LYTCore/*.h", "FrameworkTest/LYTCore/*.a"
     sdk.vendored_libraries = "Classes/LYTCore/*.a"
     sdk.public_header_files = "Classes/LYTCore/*.h"
 
