@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "LYTSDK"
-  s.version      = "1.0.05"
+  s.version      = "1.0.06"
   s.summary      = "an iOS communication SDK "
   s.description  = "an iOS communication SDK create by HHLY ,you need go to the HHLY registing you app first"
 
@@ -52,8 +52,8 @@ Pod::Spec.new do |s|
     sdk.dependency 'LYTSDK/LYTFoundation'
     sdk.dependency 'LYTSDK/LYTCommonLib'
     sdk.source_files  = "Classes/LYTSDK/*.h", "FrameworkTest/LYTSDK/*.a"
-    sdk.vendored_libraries = "Classes/LYTSDK/*.a"
-    sdk.public_header_files = "Classes/LYTSDK/*.h"
+    sdk.vendored_libraries = "Classes/LYTCore/*.a"
+    sdk.public_header_files = "Classes/LYTCore/*.h"
 
   end
 end
