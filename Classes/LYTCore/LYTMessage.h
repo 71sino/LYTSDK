@@ -80,6 +80,11 @@
 @property (assign, nonatomic) LYTMessageState status;
 
 
+/**
+ 针对自己发送的消息 对方对该消息 是否已读的状态标志 默认未读
+ */
+@property (assign, nonatomic) LYTMessageState taReadedStatus;
+
 
 /**
  阅后即焚延迟删除的时间 (单位:s)
@@ -130,9 +135,9 @@
 
 
 /**
- 是否是自己发送的  由UI自己控制赋值
+当前消息是否为自己发送的
  */
-@property (assign, nonatomic) BOOL isSender;
+@property (nonatomic,readwrite,assign) BOOL isSender;
 
 
 @end

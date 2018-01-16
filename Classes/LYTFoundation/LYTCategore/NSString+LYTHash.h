@@ -33,15 +33,4 @@
 //获取文件的md5
 + (NSString *)lyt_getFileMD5WithPath:(NSString *)filePath;
 
-
-
-
-//给文件命名
-+ (NSString *)lyt_renamePhotoFileWithType:(NSString *)type;
-
-/**
- 给音频命名
- */
-+ (NSString *)lyt_renameVoiceFile;
-
 @end

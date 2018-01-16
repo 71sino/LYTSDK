@@ -17,12 +17,11 @@
 @protocol LYTSDKChatRoomDelegate <NSObject>
 
 /**
- 接收到讨论组通知
+ 接收到聊天室通知
  
  @param chatRoomNoti 通知消息对象
  */
 - (void)didReceiveChatRoomNoti:(LYTChatNoti *) chatRoomNoti;
-
 @end
 
 

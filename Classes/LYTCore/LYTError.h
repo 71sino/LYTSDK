@@ -10,7 +10,7 @@
 
 
 typedef NS_ENUM(NSInteger,LYTErrorCode) {
-    LYTErrorCodeGeneral       =  1,      // 一般错误
+    LYTErrorCodeGeneral       =  1,         // 一般错误
     LYTErrorCodeNetWorkUnable = 2,           // 网络不可用
     LYTErrorCodeFileUnable = 3,              // 文件不可用
     LYTErrorCodeConnectTimeOut = 4,          // 重连超时

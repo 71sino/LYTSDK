@@ -447,7 +447,6 @@ FOUNDATION_EXTERN const NSString * _Nonnull const LYTMessageLocalPath;
 @required
 /**
  @的消息类型 可能是换行、@全体成员、@人、文本、图片等
- 
  */
 - (LYTContentType)type;
 

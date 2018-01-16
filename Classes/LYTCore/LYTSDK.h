@@ -17,65 +17,45 @@
 #import "LYTSDKSetting.h"
 #import "LYTPush.h"
 
-/**
- * 柒讯  产品标识
- */
-FOUNDATION_EXTERN NSString * const LYTQiXunProductIdentifyString;
-/**
- * 智八哥 产品标识
- */
-FOUNDATION_EXTERN NSString * const LYTZhiBaGeProductIdentifyString;
-/**
- * 评论 产品标识
- */
-FOUNDATION_EXTERN NSString * const LYTCommentProductIdentifyString;
-
-
-
 @interface LYTSDK : NSObject
+
+
 /**
  必须 通过 initWithProductId:messageTypeRange 方法 进行初始化
  */
 - (instancetype)init __attribute__((unavailable("‘init’ Forbidden use!")));
-
 /**
  实例
-
- @param productId productId 产品ID
- @param range 对应产品使用到的 消息类型 区间段
- @return 初始化对象
-
-
+ 
+ @param company 公司代码（注册）
+ @param key appKey
+ @param secret appSecret
+ @return 创建的实例
+ 
+ 
+ 
  说明:
  1.sdk接入方 使用当前方法进行 实例初始化
  2.sdk接入方 可以通过 继承当前类，再实现个sharedSDK(),做一个单例，方便方法的调用。  我们强烈推荐该方法。
  eg:
-
+ 
  @ interface LYTSUBCLASSSDK : LYTSDK
  + (instancetype)sharedSDK;
  @end
-
+ 
  @implementation LYTSUBCLASSSDK
-
+ 
  + (instancetype)sharedSDK {
-         static LYTTESTSDK *_instance = nil;
-         static dispatch_once_t onceToken;
-         dispatch_once(&onceToken, ^{
-         _instance = [[self alloc] initWithProductId:@"LYTTESTProductSDK" messageTypeRange:NSMakeRange(2000, 1500)];
-     });
-     return _instance;
+ static LYTTESTSDK *_instance = nil;
+ static dispatch_once_t onceToken;
+ dispatch_once(&onceToken, ^{
+ _instance = [[self alloc] initWith:@"your_comany_code" appKey:@"your_app_key" appSecret:@"your_app_sectet"];
+ });
+ return _instance;
  }
-@end
+ 
  */
-- (instancetype)initWithProductId:(NSString *)productId messageTypeRange:(NSRange)range;
-
-
-#pragma mark - getter
-/**
- *  LYTSDKDelegate代理对象
- */
-@property(nonatomic,weak) id <LYTSDKDelegate> delegate;
-
+- (instancetype)initWith:(NSString *)company appKey:(NSString *)key appSecret:(NSString *)secret;
 
 /**
  *  获取SDK版本号
@@ -85,7 +65,7 @@ FOUNDATION_EXTERN NSString * const LYTCommentProductIdentifyString;
 
 /**
  获取当前appkey
-
+ 
  @return 当前appkey
  */
 - (NSString *)getCurrentAppKey;
@@ -103,44 +83,12 @@ FOUNDATION_EXTERN NSString * const LYTCommentProductIdentifyString;
 - (NSString *)currentUser;
 
 
-#pragma mark - 初始化配置 方法
 /**
- 设置SDK是否需要使用 聊天室、讨论组功能 默认都不加载
-        -- 登录之前要配置 默认都设置为NO
- 
- @param isChatRoom 是否需要聊天室功能
- @param isGroup 是否需要讨论组功能
+ *  LYTSDKDelegate代理对象
  */
-- (void)setChatRoomEnable:(BOOL)isChatRoom groupEnable:(BOOL)isGroup;
+@property(nonatomic,weak) id <LYTSDKDelegate> delegate;
 
 
-/**
- 初始化SDK 
-        -- 正常登录SDK之前必须调用该方法
-
- @param company 公司代码（注册）
- @param appKey APPKey
- @param appSecret app密钥
- */
-- (void)configSDKCompany:(NSString *)company appKey:(NSString *)appKey appSecret:(NSString *)appSecret;
-
-
-/**
- 设置是否接收离线消息
-
- @param shouldReceive 是否接收离线消息 （默认yes）
- */
-- (void)setShouldReceiveOfflineMessage:(BOOL)shouldReceive;
-
-/**
- 设置重连发送的超时 （默认15s）
-sendTmieOut 设置在[10s,60s]
-
- @param sendTmieOut 重连超时时间
- */
-- (void)setSendTimeOut:(NSTimeInterval)sendTmieOut;
-
-#pragma mark - 用户功能模块相关属性
 /**
  *  消息接收 发送 管理类 （详阅LYTSDKChatManagerProtocol头文件）
  */
@@ -159,55 +107,74 @@ sendTmieOut 设置在[10s,60s]
 /** 上传工具 */
 @property (nonatomic,strong,readonly) id <LYTUploadManagerProtocol> uploadManager;
 
-#pragma mark - 登录相关
-/**
- 登录SDK --- 同时用来替换 autoLoginSDK 方法
 
- @param userId 登录的用户
- @param forceLogin 强制登录
-        -- 设置为 YES 时 即使登录失败（只要不调用退出登录‘loginOut’ 或者 被挤下线）也可以访问数据库
-           而且登录失败后自动 重新发起登录
-        -- 设置为 NO 代表 登录失败 即为退出登录
+/**
+ SDK是否登录
+ YES --- 已登录
+ NO  --- 未登录, 需要调用  loginSDKWithUserId:forceLogin:complete方法进行登录
+ */
+@property(nonatomic,assign,readonly) BOOL isLogined;
+
+
+
+#pragma mark - 初始化配置 方法
+/**
+ 设置SDK是否需要使用 聊天室、讨论组功能 默认都不加载
+        -- 登录之前要配置 默认都设置为NO
  
- @param complete 完成回调 有error 登录失败 没有error登录成功
-        -- 注意: 当 error的code为 ‘LYTErrorCodeDidLogin’ 时 表示SDK 已登录 
-                在 error info中会返回userId表示已登录的账号
+ @param isChatRoom 是否需要聊天室功能
+ @param isGroup 是否需要讨论组功能
+ */
+- (void)setChatRoomEnable:(BOOL)isChatRoom groupEnable:(BOOL)isGroup;
+
+/**
+ 设置是否接收离线消息
+
+ @param shouldReceive 是否接收离线消息 （默认YES）
+ */
+- (void)setShouldReceiveOfflineMessage:(BOOL)shouldReceive;
+
+
+/**
+ 设置重连发送的超时 （默认15s）
+ sendTmieOut 设置在[10s,60s]
  
-        -- 如果需要切换账号需要 先调用 ‘logotWithComplete:’ 再调用登录接口
-
+ @param sendTmieOut 重连超时时间
  */
-- (void)loginSDKWithUserId:(NSString *)userId forceLogin:(BOOL)forceLogin complete:(void(^)(LYTError *error))complete;
+- (void)setSendTimeOut:(NSTimeInterval)sendTmieOut;
 
+#pragma mark - 设置登录失败是否立即返回
+/**
+ 设置登录接口失败是否立即给回调标志
+
+ @param bImmediateFlag
+ YES---登录失败,立即返回，sdk不进行重连操作. 默认值为YES
+ NO ---登录失败，多次尝尝试重连后返回接口。   这个参数导致上层拿到的回调时间延后,最糟糕情况下 60s后返回。
+ */
+- (void)setCallBackImmedWhenLoginFailed:(BOOL)bImmediateFlag;
+
+#pragma mark - 登录接口
+/**
+ SDK 登录接口
+
+ @param uid 登录者的uid --- 应用方需保证唯一
+ @param bFlag 登录失败是否使用本地数据库数据  YES:登录失败,使用本地数据库数据， NO:登录成功时才使用本地数据库数据。--- tips:应用方根据需求使用,建议设置为NO。
+ @param complete 登录接口的结果回调。error = nil时:登录成功，  error != nil:登录失败，error中附带登录失败的原因
+ -- 退出当前账号时  请务必调用 logoutWithComplete: 方法。
+ */
+- (void)loginSDKWith:(NSString *)uid useDbWhenLoginFailed:(BOOL)bFlag complete:(void(^)(LYTError *error))complete;
+
+#pragma mark - 退出登录
 
 /**
- 退出登录
-     -- 成功退出登录后 改对象（LYTSDK实例所有的推送）将不会接收到信息推送
+ SDK退出登录
  */
-- (void)logoutWithComplete:(void(^)(LYTError *error))complete;
+- (void)logoutSDK;
 
 
-/** 
- 是否登录
- */
-@property(nonatomic,assign,readonly) BOOL isLogin;
 
-#pragma mark - 通讯相关（SDKSocket连接相关）
-/**
-  通讯功能是否处于连接状态
- 
- @return YES 为已连接 NO 为未连接
- */
-- (BOOL)isConnected;
 
-#pragma mark - 远程推送相关
-
-/**
- 该实例是否开启远程推送 默认为NO
-
- @param remoteEnable 是否开启远程推送
- */
-- (void)setRemotePushEnable:(BOOL)remoteEnable;
-
+#pragma mark - 远程推送铃声修改
 /**
  更新远程推送的铃声
      -- 默认为 常规铃声
@@ -219,16 +186,16 @@ sendTmieOut 设置在[10s,60s]
 
 #pragma mark - 自定义主题消息订阅 （一般用于接受透传消息）
 /**
- 订阅自定义相关消息
+ 订阅自定义消息主题
 
- @param customTopics 自定义主题数组
+ @param customTopics 自定义消息主题数组:实现内部默认为 每个主题 添加了 appkey/ 当前缀
  */
 - (void)subscrCustomRealTimeMessageTopids:(NSArray<NSString*> *)customTopics;
 
 /**
- 取消订阅自定义相关消息
+ 取消订阅自定义消息相关
 
- @param customTopics 自定义主题数组
+ @param customTopics 自定义消息主题数组:实现内部默认 每个主题 添加了 appkey/ 当前缀
  */
 - (void)cancelSubscrCustomRealTimeMessageTopids:(NSArray<NSString*> *)customTopics;
 
@@ -238,6 +205,12 @@ sendTmieOut 设置在[10s,60s]
  */
 - (void)clearLocalData;
 
+/**
+ 设置企业相关信息
 
-
+ @param company 公司代码（注册）
+ @param key appkey
+ @param secret appSecret
+ */
+- (BOOL)setCompany:(NSString *)company appKey:(NSString *)key appSecret:(NSString *)secret;
 @end

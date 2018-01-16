@@ -49,6 +49,16 @@ typedef void(^LYTSendProgressBlock)(CGFloat progress);
 - (void)didReceiveRealTimeMessage:(LYTMessage *)message;
 
 @optional
+
+/**
+ 给第三方的回调。
+ 自己发送出去的消息后，对方对该消息给的已读消息回调
+ 
+ @param message 自己发送出现的消息
+ */
+- (void)didReceiveTaReadedMessageStatus:(LYTMessage *)message;
+
+
 /**
  接收到回执消息
  -- 其他功能： 代表该消息发送成功到服务器 可以用于第二次进入聊天界面时候 没有block回调刷新消息发送成功通知 的界面即时刷新
@@ -87,6 +97,7 @@ typedef void(^LYTSendProgressBlock)(CGFloat progress);
 @protocol LYTSDKChatManagerProtocol <LYTBaseManagerProtocol>
 // 添加代理
 - (void)addDelegate:(id<LYTSDKChatManagerDelegate>)delegate;
+
 /**
  根据会话 加载离线消息
     该方法必须确保当前处于连接状态
@@ -111,7 +122,10 @@ typedef void(^LYTSendProgressBlock)(CGFloat progress);
  @param complete 发送状态回调
         -- 第一次LYTMessageStateSending 回调
  */
-- (void)sendMessageWithModel:(LYTMessage *)message shouldSaveMessageInDB:(BOOL)shouldSave progress:(LYTSendProgressBlock)progress complete:(LYTSendCompleteBlock)complete;
+- (void)sendMessageWithModel:(LYTMessage *)message
+       shouldSaveMessageInDB:(BOOL)shouldSave
+                    progress:(LYTSendProgressBlock)progress
+                    complete:(LYTSendCompleteBlock)complete;
 
 #pragma mark - setting function
 /**
@@ -131,18 +145,23 @@ typedef void(^LYTSendProgressBlock)(CGFloat progress);
 
 /**
  退出聊天界面调用
-
- @return 是否成功
+@param sessionId 会话ID
+@return 是否成功
  */
-- (BOOL)exitChatSession;
+- (BOOL)exitChatSession:(NSString *)sessionId;
+
+
+/*
+ * 设置消息映射关系 方法已废弃 文本、图片、语音等常规消息都为统一的类型 其他的均为自定义消息类型自己管理content
+ *
+ */
 
 /**
  设置消息映射关系 例如文本消息：1001 但是 在 法义sdk中 则是3901
- 
+
  @param maping 消息映射表例如@{@"3901" : @"1001",@"3902" : @"1002",@"3903" : @"1003",@"3904" : @"1005"}
  */
 - (void)setMessageTypeMapping:(NSDictionary <NSString *,NSString *>*)maping;
-
 @end
 
 #endif /* LYTSDKChatManagerProtocol_h */

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "LYTResultSet.h"
-#import "LYTDatabasePool.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -1024,7 +1024,7 @@ typedef int(^LYTDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionar
  For example:
  
     [db makeFunctionNamed:@"RemoveDiacritics" arguments:1 block:^(void *context, int argc, void **argv) {
-        SqliteValueType type = [self.db valueType:argv[0]];
+        LYTSqliteValueType type = [self.db valueType:argv[0]];
         if (type == SqliteValueTypeNull) {
             [self.db resultNullInContext:context];
              return;
@@ -1054,15 +1054,15 @@ typedef int(^LYTDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionar
 
 - (void)makeFunctionNamed:(NSString *)name maximumArguments:(int)count withBlock:(void (^)(void *context, int argc, void * _Nonnull * _Nonnull argv))block __deprecated_msg("Use makeFunctionNamed:arguments:block:");
 
-typedef NS_ENUM(int, SqliteValueType) {
-    SqliteValueTypeInteger = 1,
-    SqliteValueTypeFloat   = 2,
-    SqliteValueTypeText    = 3,
-    SqliteValueTypeBlob    = 4,
-    SqliteValueTypeNull    = 5
+typedef NS_ENUM(int, LYTSqliteValueType) {
+    LYTSqliteValueTypeInteger = 1,
+    LYTSqliteValueTypeFloat   = 2,
+    LYTSqliteValueTypeText    = 3,
+    LYTSqliteValueTypeBlob    = 4,
+    LYTSqliteValueTypeNull    = 5
 };
 
-- (SqliteValueType)valueType:(void *)argv;
+- (LYTSqliteValueType)valueType:(void *)argv;
 
 /**
  Get integer value of parameter in custom function.
