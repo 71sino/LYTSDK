@@ -2,7 +2,7 @@
 
 ***
 
-### 2.0.01 版本
+### 2.0.03 版本
 1. 接口新增
     1. 新增setCallBackImmedWhenLoginFail 主动调用接口
     2. didReceiveTaReadedMessageStatus:  回调接口
