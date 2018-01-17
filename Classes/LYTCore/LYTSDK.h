@@ -206,7 +206,7 @@
 - (void)clearLocalData;
 
 /**
- 设置企业相关信息
+ 设置企业相关信息   一般使用初始化接口
 
  @param company 公司代码（注册）
  @param key appkey

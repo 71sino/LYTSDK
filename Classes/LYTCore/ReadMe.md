@@ -2,22 +2,32 @@
 
 ***
 
-### 2.0.04版本
+### 2.0.05版本
 1. 接口新增
-    1. 新增setCallBackImmedWhenLoginFail 主动调用接口
-    2. didReceiveTaReadedMessageStatus:  回调接口
+    1. 新增 setCallBackImmedWhenLoginFailed 主动调用接口
+    2. 新增 didReceiveTaReadedMessageStatus:  回调接口
+    3. 新增 initWith:appKey:appSecret:  主动调用接口
+    4. 新增 setCompany:appKey:appSecret: 主动调用接口
+
 2. 接口删除
     1. 删除 isConnected 接口
     2. 删除 setRemotePushEnable 接口
+    3. 删除 configSDKCompany:appKey:appSecret: 接口
+    4. 删除 initWithProductId:messageTypeRange: 接口
+
 3. 接口重命名
     1. isLogined 替换 isLogin
     2. sdk登录接口为:loginSDKWith:useDbWhenLoginFailed:complete:
     3. logoutSDK 替换 logoutWithComplete:接口
+    4. exitChatSession 替换 exitChatSession:方法
+
 4. 优化
     1. 减小SDK静态库的大小
     2. sdk登录接口使用V4优化
     3. sdk登录逻辑添加了失败重连机制
     4. APNs推送信息上传逻辑优化
+    5. ReadMe.md文件随SDK导出给第三方用户
+
 5. 新加功能
     1. 对方消息已读状态
     2. 内部日志系统完善
@@ -31,10 +41,6 @@
     1. 文本、图片、语音等常规消息都为统一的类型,其他拓展的消息均为自定义消息类型自己管理content
     2. 新增透传消息类型,不保存,允许丢失
     3. 兼容消息映射关系方法
-
-
-
-
 
 
 
