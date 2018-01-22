@@ -21,7 +21,7 @@
 
 
 /**
- 必须 通过 initWithProductId:messageTypeRange 方法 进行初始化
+ 必须 通过 initWith:appKey:appSecret:方法 进行初始化
  */
 - (instancetype)init __attribute__((unavailable("‘init’ Forbidden use!")));
 /**

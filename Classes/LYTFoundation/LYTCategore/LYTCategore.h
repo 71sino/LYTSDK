@@ -9,7 +9,7 @@
 #ifndef LYTCategore_h
 #define LYTCategore_h
 
-#import "NSArray+ArrayFormSet.h"
+#import "NSArray+LYTArrayFormSet.h"
 #import "NSMutableArray+LYTAddObject.h"
 #import "NSMutableDictionary+LYTSetObjc.h"
 #import "NSObject+LYTSelector.h"

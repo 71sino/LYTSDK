@@ -10,7 +10,7 @@
 #define LYTCommonLib_h
 
 #import "SDKNetworking.h"
-#import "LYTDB.h"
+#import "LYSafetySqlite.h"
 
 // 断点下载
 #import "SGDownloadManager.h"
