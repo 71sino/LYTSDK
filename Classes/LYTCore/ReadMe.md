@@ -1,6 +1,14 @@
 # 版本更新说明
 
 ***
+### 2.0.08版本
+1. bug处理
+    1. 发送已读回执时sendUid为空时导致的crash
+
+2. 优化
+    1. subscrCustomRealTimeMessageTopids: 及 cancelSubscrCustomRealTimeMessageTopids: 接口添加参数检验
+
+***
 ### 2.0.07版本
 1. bug处理
     1.  处理被踢下线mqtt出现crash的问题
@@ -14,7 +22,6 @@
     1. 登录接口增加对推送参数的校验
     2. 删除不使用的注释及不使用代码
     3. mqtt断开连接优化
-    4. 完善initWith:appKey:appSecret:接口的说明
 
 
 ***
