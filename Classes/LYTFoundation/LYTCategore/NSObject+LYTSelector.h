@@ -48,7 +48,7 @@
  @return 方法的返回值 void 返回为nil
  */
 + (id)lyt_performClassSelector:(SEL)selector withObject:(id)object;
-
+- (id)lyt_performInstanceSelector:(SEL)selector withObject:(id)objct;
 
 /**
  动态调用类方法 不需要校验方法是否实现 debug模式下回抛出异常 但在release环境下会做容错处理返回nil
