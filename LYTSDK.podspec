@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "LYTSDK"
-  s.version      = "2.0.14_1"
+  s.version      = "2.0.14.2"
   s.summary      = "an iOS communication SDK "
   s.description  = "an iOS communication SDK create by HHLY ,you need go to the HHLY registing you app first"
 
