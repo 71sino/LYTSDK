@@ -44,6 +44,24 @@ typedef void(^LYTCompleteBlock)(LYTError *error);
 - (void)socketDidDisconnectWithSDK:(LYTSDK *)sdk;
 - (void)sdk:(LYTSDK *)sdk socketDidConnectedFail:(LYTError *)error;
 
+/**
+ SDK即将发起离线消息请求
+ */
+- (void)sdkWillRequestOfflineMessages:(LYTSDK *)sdk;
+
+
+/**
+ SDK请求离线消息失败
+ 
+ @param error 失败信息
+ */
+- (void)sdk:(LYTSDK *)sdk didRequestOfflineMessagesFailue:(LYTError *)error;
+
+/**
+ SDK已经送离线请求
+ */
+- (void)sdkDidRequestOfflineMessages:(LYTSDK *)sdk;
+
 @end
 
 
